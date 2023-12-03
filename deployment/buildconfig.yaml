@@ -1,0 +1,32 @@
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: bc-docker-fastapi
+    app.kubernetes.io/component: bc-docker-fastapi
+    app.kubernetes.io/instance: bc-docker-fastapi
+  name: bc-docker-fastapi
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: bc-docker-fastapi:latest
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      uri: https://github.com/tinmancoding/oc-fastapi.git
+      ref: "bc-docker"
+    type: Git
+  strategy:
+    dockerStrategy:
+      from:
+        kind: ImageStreamTag
+        name: python:3.9
+    type: Docker
+  successfulBuildsHistoryLimit: 5
+
